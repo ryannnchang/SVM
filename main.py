@@ -6,6 +6,12 @@ import pickle
 import RPi.GPIO as GPIO
 from sklearn.svm import SVC
 import time
+import datetime
+import csv
+
+#Run Number
+file_name = str(input("Enter the file name (without .csv): "))
+file_dict = "experiment_log/" + file_name + ".csv"
 
 ##Button Pin Definition
 button = 17
@@ -19,7 +25,7 @@ data_labels = {0.0:"Walking", 1.0: "Walking Up", 2.0: "Walking Down", 3.0: "Sitt
 model = pickle.load(open("SVM_model.pkl", "rb"))
 
 #Collecting data
-predictions = []
+data = []
 
 #Running Sensor 
 while GPIO.input(button) != False:
@@ -34,9 +40,19 @@ while GPIO.input(button) != False:
 	
 	feat = extract_features(window)
 	prediction = model.predict(feat)
-	print(data_labels[prediction[0]])
+	date = datetime.datetime.now()
+	data.append([data_labels[prediction[0]], date])
+	
+	
+	print(f"Prediction: {data_labels[prediction[0]]} \t Time: {date}")
 
 print("Stopping Program")
-print("Saving data")
+print("Saving data...")
 
-	
+with open(file_dict, mode="w", newline="") as file:
+	for i in range(len(data)):
+		writer = csv.writer(file)
+		writer.writerow([data[i][0], data[i][1]])
+
+file.close()
+print(f"Data saved to {file_dict} successfully")
