@@ -14,6 +14,7 @@ def read_acc():
 	return ax, ay, az
 
 def extract_features(data): #data has input shape: (3,128)
+	data = np.array(data)
 	#mean
 	x_mean = np.mean(data[0])
 	y_mean = np.mean(data[1])
@@ -45,6 +46,7 @@ def extract_features(data): #data has input shape: (3,128)
 	corr_yz = np.corrcoef(data[1], data[2])[0][1]
 	
 	feat = [x_mean, y_mean, z_mean, std_x, std_y, std_z, max_x, max_y, max_z, min_x, min_y, min_z, square_x, square_y, square_z, corr_xy, corr_xz, corr_yz]
+	feat = np.array(feat)
 	
 	return feat.reshape(1, -1)
 	
