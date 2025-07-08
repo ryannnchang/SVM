@@ -3,6 +3,7 @@ import numpy as np
 import time
 
 lsm = LSM6DS3()
+
 sent = 0.000061
 
 def read_acc():
@@ -32,8 +33,8 @@ def extract_features(data): #data has input shape: (3,128)
 	
 	#min
 	min_x = np.min(data[0])
-	min_y = np.max(data[1])
-	min_z = np.max(data[2])
+	min_y = np.min(data[1])
+	min_z = np.min(data[2])
 	
 	#average of squares 
 	square_x = np.mean(np.square(data[0]))
@@ -49,5 +50,4 @@ def extract_features(data): #data has input shape: (3,128)
 	feat = np.array(feat)
 	
 	return feat.reshape(1, -1)
-	
 	
