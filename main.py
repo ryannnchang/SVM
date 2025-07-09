@@ -1,5 +1,5 @@
 #Importing FIles
-from sensor_preprocessing import read_acc, extract_features
+from sensor_preprocessing import read_acc, extract_features, extract_features2
 
 #Importing libraries 
 import pickle
@@ -23,7 +23,7 @@ data_labels = {0.0:"Walking", 1.0: "Walking Up", 2.0: "Walking Down", 3.0: "Sitt
 
 #Loading Model In
 folder = "models"
-model_file = "SVM_model.pkl"
+model_file = "SVM_modelV2.pkl"
 path = folder + "/" + model_file
 
 model = pickle.load(open(path, "rb"))
@@ -42,13 +42,13 @@ while GPIO.input(button) != False:
 		window[2].append(az)
 		time.sleep(0.02)
 	
-	feat = extract_features(window)
+	feat = extract_features2(window)
 	prediction = model.predict(feat)
 	date = datetime.datetime.now()
 	data.append([data_labels[prediction[0]], date])
 	
 	
-	print(f"Prediction: {data_labels[prediction[0]]} \t Time: {date}")
+	print(f"Time: {date} \t Prediction: {data_labels[prediction[0]]}")
 
 print("Stopping Program")
 print("Saving data...")

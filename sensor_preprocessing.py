@@ -50,4 +50,24 @@ def extract_features(data): #data has input shape: (3,128)
 	feat = np.array(feat)
 	
 	return feat.reshape(1, -1)
+
+def extract_features2(data):
+	std_y = np.std(data[1])
 	
+	max_x = np.max(data[0])
+	
+	min_y = np.min(data[1])
+	min_z = np.min(data[2])
+	
+	mean_x = np.mean(data[0])
+	
+	square_z = np.mean(np.square(data[2]))
+	square_y = np.mean(np.square(data[1]))
+	
+	feat = [std_y, max_x, min_y, min_z, mean_x, square_z, square_y]
+	feat = np.array(feat)
+	
+	return feat.reshape(1, -1)
+	
+
+
