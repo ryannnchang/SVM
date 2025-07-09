@@ -22,7 +22,11 @@ GPIO.setup(button, GPIO.IN)
 data_labels = {0.0:"Walking", 1.0: "Walking Up", 2.0: "Walking Down", 3.0: "Sitting", 4.0: "Standing", 5.0: "Laying Down"}
 
 #Loading Model In
-model = pickle.load(open("SVM_model.pkl", "rb"))
+folder = "models"
+model_file = "SVM_model.pkl"
+path = folder + "/" + model_file
+
+model = pickle.load(open(path, "rb"))
 
 #Collecting data
 data = []

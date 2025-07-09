@@ -2,7 +2,7 @@ from sensor_preprocessing import read_acc, extract_features
 import matplotlib.pyplot as plt
 import pickle
 
-data_labels = {0.0:"Walking", 1.0: "Walking Up", 2.0: "Walking Down", 3.0: "Sitting", 4.0: "Standing", 5.0: "Laying Down"}
+data_labels = {0.0:"Walking", 1.0: "Walking Up", 2.0: "Walking Down", 3.0: "Sitting", 4.0: "Standing", 5.0: "Laying"}
 
 model = pickle.load(open("SVM_model.pkl", "rb"))
 
@@ -19,6 +19,8 @@ while len(window[0]) < 128:
 data.append(window)
 feat = extract_features(window)
 prediction = model.predict(feat)
+
+print(feat)
 
 #Plotting the collected data
 plt.figure(figsize=(10, 4))
