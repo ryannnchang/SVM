@@ -1,5 +1,5 @@
 #Importing FIles
-from sensor_preprocessing import read_acc, extract_features, extract_features2
+from sensor_preprocessing import read_acc, extract_features, extract_features2, mov_avg
 
 #Importing libraries 
 import pickle
@@ -42,13 +42,22 @@ while GPIO.input(button) != False:
 		window[2].append(az)
 		time.sleep(0.02)
 	
+	#Predicting based on raw data
 	feat = extract_features2(window)
-	prediction = model.predict(feat)
+	predict_ind = model.predict(feat)
+	prediction = data_labels[predict_ind[0]]
 	date = datetime.datetime.now()
-	data.append([data_labels[prediction[0]], date])
+	
+	#Predicting based on filtered 
+	data_fil = mov_avg(window, 10)
+	feat_fil = extract_features2(window)
+	predict_ind_fil = model.predict(feat_fil)
+	prediction_fil = data_labels[predict_ind_fil[0]]
+
+	data.append([date, prediction, prediction_fil])
 	
 	
-	print(f"Time: {date} \t Prediction: {data_labels[prediction[0]]}")
+	print(f"Time: {date} \t PredictionRaw: {prediction} \t PredictionFil: {prediction_fil}")
 
 print("Stopping Program")
 print("Saving data...")

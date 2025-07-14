@@ -69,5 +69,17 @@ def extract_features2(data):
 	
 	return feat.reshape(1, -1)
 	
+def mov_avg(data, window_size): #data has size of (3, 128)
+	kernel = np.ones(window_size) / window_size
+	
+	x = np.convolve(data[0], kernel, mode='same')
+	y = np.convolve(data[1], kernel, mode='same')
+	z = np.convolve(data[2], kernel, mode='same')
+	
+	output = np.stack([x,y,z])
+	
+	return output
+	
+	
 
 
