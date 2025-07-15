@@ -20,7 +20,6 @@ def display(word):
 	myOLED.clear(myOLED.PAGE)
 	myOLED.print(word)
 	myOLED.set_cursor(0,0)
-	myOLED.pixel(32, 32)
 	myOLED.display()
 	
 

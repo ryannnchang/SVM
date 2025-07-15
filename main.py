@@ -1,5 +1,6 @@
 #Importing FIles
 from sensor_preprocessing import read_acc, extract_features, extract_features2, mov_avg
+from screen import display, off
 
 #Importing libraries 
 import pickle
@@ -10,7 +11,8 @@ import datetime
 import csv
 
 #Run Number
-file_name = str(input("Enter the file name (without .csv): "))
+#file_name = str(input("Enter the file name (without .csv): "))
+file_name = 'Test'
 file_dict = "experiment_log/" + file_name + ".csv"
 
 ##Button Pin Definition
@@ -19,7 +21,7 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(button, GPIO.IN)
 
 #Label dictionary
-data_labels = {0.0:"Walking", 1.0: "Walking Up", 2.0: "Walking Down", 3.0: "Sitting", 4.0: "Standing", 5.0: "Laying Down"}
+data_labels = {0.0:"Walking", 1.0: "WalkingUp", 2.0: "WalkingDw", 3.0: "Sitting", 4.0: "Standing", 5.0: "Laying"}
 
 #Loading Model In
 folder = "models"
@@ -56,8 +58,8 @@ while GPIO.input(button) != False:
 
 	data.append([date, prediction, prediction_fil])
 	
-	
-	print(f"Time: {date} \t PredictionRaw: {prediction} \t PredictionFil: {prediction_fil}")
+	print(f"Time: {date} \t PredictionRaw: {prediction}")
+	display(prediction)
 
 print("Stopping Program")
 print("Saving data...")
@@ -69,3 +71,5 @@ with open(file_dict, mode="w", newline="") as file:
 
 file.close()
 print(f"Data saved to {file_dict} successfully")
+
+off()
